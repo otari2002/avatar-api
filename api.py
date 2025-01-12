@@ -28,7 +28,20 @@ os.environ["GITHUB_TOKEN"] = "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"
 pipe_lr = joblib.load(open("./models/emotion_classifier_pipe_lr.pkl", "rb"))
 
 # Define file path for audio output
-output_file_path = "audio/response_converted_20250112122717.ogg"
+output_file_path = "audio/response.ogg"
+
+emotionMap = {
+    "angry": "angry",
+    "disgust": "default",
+    "fear": "sad",
+    "happy": "smile",
+    "joy": "smile",
+    "neutral": "default",
+    "sad": "sad",
+    "sadness": "sad",
+    "shame": "suprised",
+    "surprise": "suprised"
+}
 
 # Function to predict emotions
 def predict_emotions(docx):
@@ -37,21 +50,41 @@ def predict_emotions(docx):
     return results[0]
 
 # Function to get response from OpenAI
-def get_openai_response(input_text):
+def get_openai_response(input_text,emotion):
+    
+    emotion_to_tone = {
+        "angry": "calm and understanding",
+        "disgust": "reassuring and respectful",
+        "fear": "supportive and comforting",
+        "happy": "enthusiastic and encouraging",
+        "joy": "cheerful and engaging",
+        "neutral": "informative and neutral",
+        "sad": "empathetic and supportive",
+        "sadness": "empathetic and supportive",
+        "shame": "reassuring and non-judgmental",
+        "surprise": "curious and engaged"
+    }
+    
     client = OpenAI(
         base_url="https://models.inference.ai.azure.com",
         api_key=os.environ["GITHUB_TOKEN"],
     )
     response = client.chat.completions.create(
         messages=[
-            {"role": "system", "content": ""},
-            {"role": "user", "content": input_text},
+            {
+                "role": "system",
+                "content": "You are a helpful assistant who understands and responds to emotions.",
+            },
+            {
+                "role": "user",
+                "content": f'The user seems {emotion}. Respond in a {emotion_to_tone[emotion]} way with no emojis at all. The user said: "{input_text}"',
+            }
         ],
         model="gpt-4o",
         temperature=1,
         max_tokens=4096,
         top_p=1
-    )
+)
     return response.choices[0].message.content
 
 # Function to synthesize speech from text
@@ -60,7 +93,7 @@ def synthesize_speech(text):
     service_region = "eastus"
 
     speech_config = speechsdk.SpeechConfig(subscription=speech_key, region=service_region)
-    speech_config.speech_synthesis_voice_name = "en-US-AriaNeural"
+    speech_config.speech_synthesis_voice_name = "en-US-JasonNeural"
     
     # Configure audio output to be stored in a file
     audio_config = speechsdk.audio.AudioOutputConfig(filename=output_file_path)
@@ -119,12 +152,11 @@ def generate_json_from_audio(input_audio_file):
         
 # Function to save the audio and predict emotion
 def save_audio_and_get_emotion(text):
-    response_text = "" #get_openai_response(text)
-    # synthesize_speech(response_text)
-    emotion = "happy" #predict_emotions(response_text)
-    json_path= "./results/response_20250112122717.json" #generate_json_from_audio(output_file_path) 
-  
-    return emotion, response_text ,json_path
+    userEmotion = "fear" #predict_emotions(text)
+    response_text = get_openai_response(text,userEmotion)
+    synthesize_speech(response_text)
+    json_path=generate_json_from_audio(output_file_path)
+    return emotionMap[userEmotion], response_text ,json_path
 
 @app.route("/api/audio", methods=["POST"])
 def send_audio_and_emotion():
