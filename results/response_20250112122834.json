@@ -1,0 +1,37 @@
+{
+  "metadata": {
+    "soundFile": "C:\\Users\\omari\\Desktop\\AI-Project\\apiapplication\\audio\\response_converted_20250112122834.ogg",
+    "duration": 6.57
+  },
+  "mouthCues": [
+    { "start": 0.00, "end": 0.09, "value": "X" },
+    { "start": 0.09, "end": 0.19, "value": "C" },
+    { "start": 0.19, "end": 0.47, "value": "E" },
+    { "start": 0.47, "end": 0.61, "value": "F" },
+    { "start": 0.61, "end": 1.54, "value": "X" },
+    { "start": 1.54, "end": 1.66, "value": "C" },
+    { "start": 1.66, "end": 1.77, "value": "A" },
+    { "start": 1.77, "end": 1.82, "value": "B" },
+    { "start": 1.82, "end": 2.00, "value": "C" },
+    { "start": 2.00, "end": 2.14, "value": "B" },
+    { "start": 2.14, "end": 2.21, "value": "C" },
+    { "start": 2.21, "end": 2.56, "value": "B" },
+    { "start": 2.56, "end": 2.77, "value": "C" },
+    { "start": 2.77, "end": 2.91, "value": "B" },
+    { "start": 2.91, "end": 3.85, "value": "X" },
+    { "start": 3.85, "end": 4.00, "value": "B" },
+    { "start": 4.00, "end": 4.08, "value": "A" },
+    { "start": 4.08, "end": 4.15, "value": "C" },
+    { "start": 4.15, "end": 4.43, "value": "B" },
+    { "start": 4.43, "end": 4.50, "value": "G" },
+    { "start": 4.50, "end": 4.57, "value": "C" },
+    { "start": 4.57, "end": 4.92, "value": "B" },
+    { "start": 4.92, "end": 5.00, "value": "A" },
+    { "start": 5.00, "end": 5.05, "value": "C" },
+    { "start": 5.05, "end": 5.23, "value": "B" },
+    { "start": 5.23, "end": 5.30, "value": "C" },
+    { "start": 5.30, "end": 5.44, "value": "D" },
+    { "start": 5.44, "end": 5.72, "value": "B" },
+    { "start": 5.72, "end": 6.57, "value": "X" }
+  ]
+}
